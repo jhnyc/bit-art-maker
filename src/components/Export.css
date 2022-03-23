@@ -51,17 +51,21 @@
     margin-left: 10px;
     margin-right: 10px;
     font-weight: bold;
-    color: #3b3e47;
+    color: white;
+    font-size: 10px;
+    background-color: #007AFF;
     width: 70px;
     height: 30px;
-    border: 2px solid #1DB954;
     border-radius: 100rem;
     cursor: pointer;
 }
 
 #exportModal button:hover {
-    background-color: #1DB954;
     color: white;
+    transition: 0.4s ease;
+    transform: scale(1.05,1.05)
+}
+#exportModal button:not(:hover) {
     transition: 0.4s ease;
 }
 

@@ -26,16 +26,24 @@
         filter: brightness(80%);
     }
     
-    .grid svg {
+    .grid {
         position: absolute;
-        left: 20%;
+        top: 3%;
+        right: 30%;
+        left: 23%;
+    }
+    
+    .grid svg {
+        position: relative;
+        overflow: auto;
+        width: 100%;
     }
     
     .botNavigationBar {
         position: fixed;
         background-color: #282c34;
         bottom: 0%;
-        height: 100px;
+        height: 15%;
         width: 75%;
         z-index: 50;
     }
@@ -52,7 +60,7 @@
     }
     
     .leftNavigationBar {
-        position: absolute;
+        position: fixed;
         background-color: #252931;
         left: 0px;
         top: 0px;
@@ -67,44 +75,35 @@
         color: white;
         border-radius: 100rem;
         left: 86%;
-        bottom: 35%;
-        width: 110px;
+        bottom: 38%;
+        width: 8%;
+        min-width: 60px;
         height: 40px;
         border: 3px solid #1DB954;
         cursor: pointer;
+        font-weight: bold;
     }
     
     #export:hover {
         background-color: #1DB954;
         transition: 0.4s ease;
+        box-shadow: 0px 5px 10px #1db9548c;
+        transform: scale(1.05, 1.05)
     }
     
     #export:not(:hover) {
         transition: 0.4s ease;
     }
     
-    .colorPicker {
-        position: relative;
-        left: 33%;
-        bottom: 0%;
-        padding-top: 2%;
-        width: 50%;
-        z-index: 100;
-    }
-    
-    .slider-picker {
-        /* transform: scale(1.1,1.1); */
-        transition-delay: 3s
-    }
-    
     #openSketchPicker {
         background-color: #282c34;
+        opacity: 100%;
     }
     
     .botNavigationBar #openSketchPicker {
-        position: absolute;
-        top: 37px;
-        left: -70px;
+        position: relative;
+        bottom: 4vh;
+        left: -13%;
         padding-top: 0%;
         transform: scale(1.5, 1.5);
     }
@@ -121,18 +120,26 @@
     .botNavigationBar svg:hover {
         fill: white;
         transition: 0.4s ease;
+        filter: drop-shadow(0px 5px 10px #1db954b7);
+        transform: scale(1.1, 1.1);
     }
     
     .botNavigationBar svg:not(:hover) {
         transition: 0.4s ease;
     }
     
+    .colorPicker {
+        position: absolute;
+        left: 33%;
+        top: 30%;
+        width: 50%;
+        z-index: 100;
+    }
+    
     .slider-picker {
         cursor: pointer;
+        transition-delay: 3s
     }
-    /* #openSketchPicker {
-        bottom:100px;
-    }  */
     
     #SketchPicker {
         position: fixed;
@@ -160,6 +167,19 @@
         top: 30px;
         cursor: pointer;
         margin-top: 10px;
+        text-overflow: hidden;
+        transition: 2s ease;
+    }
+    
+    @media (max-width: 880px) {
+        .buttons button {
+            font-size: 0px
+        }
+        .buttons svg {
+            position: absolute;
+            left: 40%;
+            transition: 2s ease;
+        }
     }
     
     .buttons button:hover {
@@ -171,7 +191,6 @@
         position: relative;
         height: 50px;
         width: 100%;
-        font-size: 14.5px;
         font-weight: bold;
         border: 0px;
         left: 0px;
@@ -201,7 +220,7 @@
         background-color: none;
         height: 100%;
         width: 4%;
-        left: 67%;
+        right: 26%;
     }
     
     .recentColors button {
@@ -212,12 +231,18 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        height: 50px;
-        width: 50px;
-        font-size: 14px;
-        top: 30px;
+        height: 5vmin;
+        width: 5vmin;
+        top: 3vh;
         cursor: pointer;
-        margin-top: 13px;
+        margin-top: 30%;
+    }
+    
+    @media (max-width: 880px) {
+        .recentColors {
+            transform: rotate(270deg);
+            top: -40%;
+        }
     }
     
     .recentColors button:hover {

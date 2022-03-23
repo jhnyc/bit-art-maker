@@ -4,7 +4,7 @@ export default class Grid extends React.Component {
     render () {
         return (
             
-            <svg width="600" height="600" viewBox="-100 0 740 690" fill="none" xmlns="http://www.w3.org/2000/svg" display="block">
+            <svg width="80vh" height="80vh" viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg" display="block">
                 <title>Grid</title>
                 <g id="layer2" display="block">
                 <g id="svg_27" >
