@@ -65,7 +65,11 @@ const convertColorArraytoPng = (color) => {
         id={button._name}
         onClick={() => props.updatePreset(button.color)}
       >
-        <p>{button._name}</p>
+        <p>
+          {button._name.includes(".")
+            ? button._name.slice(0, -4)
+            : button._name}
+        </p>
         <img src={convertColorArraytoPng(button.color)} />
       </button>
     ));
