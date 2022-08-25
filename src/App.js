@@ -1,8 +1,7 @@
 import React from "react";
 import "./App.css";
-import Grid from "./components/grid";
+import Grid from "./components/Grid";
 import Accordion from "./components/List";
-import isEqual from "lodash/isEqual";
 import { SliderPicker, SketchPicker } from "react-color";
 import DisplayImage from "./components/Upload";
 import RenderData from "./components/GenerateList";
@@ -10,16 +9,19 @@ import Save from "./components/Save";
 import Export from "./components/Export";
 
 const App = () => {
-  const init = Array(4096).fill("white"); 
+  const init = Array(4096).fill("white");
   // const [fillColors, setFillColors] = React.useState(init);
   const [colorStates, setColorStates] = React.useState([init]); // to track all historical states
   const [index, setIndex] = React.useState(0); // index states with respect to all states
-  const colorState = React.useMemo(() => colorStates[index], [colorStates, index]); // trigger rerender when colorStates/index is changed
+  const colorState = React.useMemo(
+    () => colorStates[index],
+    [colorStates, index]
+  ); // trigger rerender when colorStates/index is changed
   const [gridLines, setGridLines] = React.useState(true); // track gridline state
   const [mouseDown, setMouseDown] = React.useState(false); // track mouseDown state, pixels that the mouse move over while mouseDown will be colored
-  const [color, setColor] = React.useState("#40bf80")
-  const [colorPickMode, setColorPickMode] = React.useState(false)
-  const [recentColors, setRecentColors] = React.useState([])
+  const [color, setColor] = React.useState("#40bf80");
+  const [colorPickMode, setColorPickMode] = React.useState(false);
+  const [recentColors, setRecentColors] = React.useState([]);
   const [childData, setChildData] = React.useState("a");
   const [saved, setSaved] = React.useState({
     theme: "Saved",
@@ -28,28 +30,24 @@ const App = () => {
   const [fillColorMode, setFillColorMode] = React.useState(false);
   const [sketchPickerState, setSketchPickerState] = React.useState("hidden");
 
-
-
-
   const maxRecentColors = 7;
 
   const onFillColor = (i) => {
     // only fill pixel color when not in colorPickMode
-    if (!colorPickMode) { 
-    let newFillColors = colorState.slice(0);
-    newFillColors[i] = color;
-    setFillColors(newFillColors)
-    // add to recentColors
-    let newRecentColor = recentColors.slice(-maxRecentColors);
-    if (newRecentColor.length==0){
-      newRecentColor.push(color);
+    if (!colorPickMode) {
+      let newFillColors = colorState.slice(0);
+      newFillColors[i] = color;
+      setFillColors(newFillColors);
+      // add to recentColors
+      let newRecentColor = recentColors.slice(-maxRecentColors);
+      if (newRecentColor.length == 0) {
+        newRecentColor.push(color);
+      } else if (!newRecentColor.includes(color)) {
+        newRecentColor.push(color);
+      }
+      setRecentColors(newRecentColor);
     }
-    else if (!newRecentColor.includes(color)) {
-      newRecentColor.push(color);
-    }
-    setRecentColors(newRecentColor);
-    }
-  }
+  };
 
   const setFillColors = (newColors) => {
     // avoid re-render if current colorState equals newColors
@@ -57,27 +55,27 @@ const App = () => {
     //   return;
     // }
     // push new colorState to all colorStates and update current index of state
-    const copy = colorStates.slice(0, index+1);
+    const copy = colorStates.slice(0, index + 1);
     copy.push(newColors);
     setColorStates(copy);
-    setIndex(copy.length-1)
-  }
+    setIndex(copy.length - 1);
+  };
 
   const undo = () => {
     // set index as current index-1
     // if current index=0, the init state, undo will do nothing
     setIndex(Math.max(0, Number(index) - 1));
-  }
+  };
 
   const redo = () => {
-    setIndex(Math.min(colorStates.length-1, Number(index)+1));
-  }
+    setIndex(Math.min(colorStates.length - 1, Number(index) + 1));
+  };
 
   const resetGrid = () => {
     // reset canva to init state
     setFillColors(init);
   };
-  
+
   const showGridLines = () => {
     if (gridLines) {
       return "#979797";
@@ -99,49 +97,39 @@ const App = () => {
     setFillColors(randColors);
   };
 
-
-
-
   const handleMouseSelection = (e) => {
-    if (!!mouseDown){
-      let rectId = e.target.id
-      // let newSelectedGrids = []
-      // newSelectedGrids.push(parseInt(rectId - 4)); // rectId starts with 4
-      // setSelectedGrids(newSelectedGrids)
+    if (!!mouseDown) {
+      let rectId = e.target.id;
       let gridID = parseInt(rectId - 4);
       onFillColor(gridID);
     }
-    // if (colorPickMode){
-    //   console.log(e.target.getAttribute("fill"));
-    // }
-  }
+  };
 
   const handleMouseDown = () => {
     // set mouseDown state as true when mouse down
-    setMouseDown(true)
-  }
+    setMouseDown(true);
+  };
   const handleMouseUp = () => {
     // set mouseDown state as false when mouse released
-    setMouseDown(false)
-  }
+    setMouseDown(false);
+  };
 
   const handleColorChange = (e) => {
-    setColor(e.hex)
-  }
+    setColor(e.hex);
+  };
 
   const colorPicker = () => {
-    if (fillColorMode){
-      setFillColorMode(!fillColorMode)
+    if (fillColorMode) {
+      setFillColorMode(!fillColorMode);
     }
-    setColorPickMode(!colorPickMode)
-  }
+    setColorPickMode(!colorPickMode);
+  };
 
   const colorPickerOnClick = (e) => {
     if (colorPickMode && !fillColorMode) {
       setColor(e.target.getAttribute("fill"));
       setColorPickMode(!colorPickMode); // end colorPickMode after picking the color
-    } 
-    else if (fillColorMode && !colorPickMode) {
+    } else if (fillColorMode && !colorPickMode) {
       const selectedColor = e.target.getAttribute("fill");
       let newFillColors = colorState.slice(0);
       let newFillColors_ = newFillColors.map((c) => {
@@ -154,26 +142,23 @@ const App = () => {
       setFillColors(newFillColors_);
       setFillColorMode(!fillColorMode); // end colorPickMode after picking the color
     }
-  }
+  };
 
-
-
-const onClickFillColorMode = () => {
-  if (colorPickMode) {
-    setColorPickMode(!colorPickMode); 
-  }
-  setFillColorMode(!fillColorMode);
-};
+  const onClickFillColorMode = () => {
+    if (colorPickMode) {
+      setColorPickMode(!colorPickMode);
+    }
+    setFillColorMode(!fillColorMode);
+  };
 
   const recentColorOnClick = (e) => {
     // change color to selected recent color
     setColor(e.target.style.backgroundColor);
-  }
-
+  };
 
   const getSaved = (data) => {
     setSaved(data);
-  }
+  };
 
   return (
     <div className="App">

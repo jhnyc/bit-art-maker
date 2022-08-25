@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import Chevron from "./Chevron";
-
 import "./Accordion.css";
 
 function Accordion(props) {
@@ -20,45 +19,47 @@ function Accordion(props) {
     );
   }
 
-
-  function hexToRgba(hexArray){
-    let rgbaArray = []
+  function hexToRgba(hexArray) {
+    let rgbaArray = [];
     for (var hex of hexArray) {
-      if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-        let c = hex.substring(1).split('');
-        if(c.length== 3){
-            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+      if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+        let c = hex.substring(1).split("");
+        if (c.length == 3) {
+          c = [c[0], c[0], c[1], c[1], c[2], c[2]];
         }
-        c = '0x'+c.join('');
-        rgbaArray =rgbaArray.concat([(c>>16)&255, (c>>8)&255, c&255, 255]);
-    }
-      else {
+        c = "0x" + c.join("");
+        rgbaArray = rgbaArray.concat([
+          (c >> 16) & 255,
+          (c >> 8) & 255,
+          c & 255,
+          255,
+        ]);
+      } else {
         return;
       }
     }
     return rgbaArray;
-}
-
-  
-const convertColorArraytoPng = (color) => {
-  // wrap function in useCallback to avoid rerendering
-  console.log('test')
-  const canvas  = document.createElement("canvas")
-  canvas.width = 64
-  canvas.height = 64
-  const context = canvas.getContext("2d")
-  let imageData = context.createImageData(64,64)
-  let rgbaArray = hexToRgba(color)
-  for (var i=0; i<rgbaArray.length; i++){
-    imageData.data[i] = rgbaArray[i]
   }
-  console.log('rendering icon');
-  context.putImageData(imageData,0,0)
-  var img = new Image();
-  img.src = canvas.toDataURL("image/png");
-  return img.src
-}
-  
+
+  const convertColorArraytoPng = (color) => {
+    // wrap function in useCallback to avoid rerendering
+    console.log("test");
+    const canvas = document.createElement("canvas");
+    canvas.width = 64;
+    canvas.height = 64;
+    const context = canvas.getContext("2d");
+    let imageData = context.createImageData(64, 64);
+    let rgbaArray = hexToRgba(color);
+    for (var i = 0; i < rgbaArray.length; i++) {
+      imageData.data[i] = rgbaArray[i];
+    }
+    console.log("rendering icon");
+    context.putImageData(imageData, 0, 0);
+    var img = new Image();
+    img.src = canvas.toDataURL("image/png");
+    return img.src;
+  };
+
   const buttonsWithImage = React.useMemo(() => {
     return props.buttons.map((button) => (
       <button
@@ -74,8 +75,6 @@ const convertColorArraytoPng = (color) => {
       </button>
     ));
   }, [props.buttons, props.data, props.saved.children.length]);
-
-  
 
   return (
     <div className="accordion__section">
