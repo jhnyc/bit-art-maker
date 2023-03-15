@@ -6,6 +6,6 @@ Some templates are built into app at the right panel so that you could create yo
 
 _Caveat: There is a high chance you won't be able to sell your images for $10 million._
 
-https://bit-art-maker.herokuapp.com/
+https://bit-art-maker.netlify.app/
 
 ![cover](/cover.png)
