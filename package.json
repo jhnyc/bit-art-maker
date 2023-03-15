@@ -10,6 +10,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "browserslist": "^4.21.3",
+    "caniuse-lite": "^1.0.30001382",
     "canvag": "^1.0.3",
     "react": "^16.13.0",
     "react-color": "^2.19.3",
